@@ -1,9 +1,15 @@
+import base64
 import json
-
+import time
+import os
+import random
+import googleapiclient.discovery
+from google.oauth2 import service_account
 import GC_Project_Creator as PC
 import googleapiclient
 import GC_VM_Manager as VMM
 import GC_Bucket_Creator as BC
+import GC_SSH_Manager as SSHM
 
 #Part One Create Project
 #=============================================================================================================
@@ -24,7 +30,7 @@ import GC_Bucket_Creator as BC
 # compute = googleapiclient.discovery.build('compute', 'v1')
 # project = 'cloud-infrastucture-251118'
 # zone = 'us-central1-f'
-# instance_name = 'vm2'
+# instance_name = 'vm1'
 # bucket = 'ci_11142019'
 # operation = VMM.create_instance(compute, project, zone, instance_name, bucket)
 # VMM.wait_for_operation(compute, project, zone, operation['name'])
@@ -33,18 +39,29 @@ import GC_Bucket_Creator as BC
 
 #Part Four List All VMS and Get Network Interface Information
 #=============================================================================================================
-# compute = googleapiclient.discovery.build('compute', 'v1')
-# project = 'cloud-infrastucture-251118'
-# zone = 'us-central1-f'
-# bucket = 'ci_11142019'
-# instances = VMM.list_instances(compute, project, zone)
-# print('Instances in project %s and zone %s:' % (project, zone))
-# for instance in instances:
-#     print(' - ' + instance['name'])
-#     str1 = str(instance['networkInterfaces'])
-#     json_acceptable_string = str1.replace("'", "\"")
-#     str2 = json.loads(json_acceptable_string)
-#     print(str2)
+compute = googleapiclient.discovery.build('compute', 'v1')
+project = 'cloud-infrastucture-251118'
+zone = 'us-central1-f'
+bucket = 'ci_11142019'
+instances = VMM.list_instances(compute, project, zone)
+print('Instances in project %s and zone %s:' % (project, zone))
+for instance in instances:
+    print(' - ' + instance['name'])
+    hostname = compute.instances().get(
+        project=project,
+        zone=zone,
+        instance=instance['name'],
+        fields='networkInterfaces/accessConfigs/natIP'
+    ).execute()['networkInterfaces'][0]['accessConfigs'][0]['natIP']
+    print(hostname)
+
+#=============================================================================================================
+
+#Part SSH
+#=============================================================================================================
+
+
+
 #=============================================================================================================
 
 #Part Five Delete All VMs After Docker Job is Done
