@@ -49,12 +49,12 @@ import GC_Bucket_Creator as BC
 
 #Part Five Delete All VMs After Docker Job is Done
 #=============================================================================================================
-compute = googleapiclient.discovery.build('compute', 'v1')
-project = 'cloud-infrastucture-251118'
-zone = 'us-central1-f'
-bucket = 'ci_11142019'
-instances = VMM.list_instances(compute, project, zone)
-for instance in instances:
-    operation = VMM.delete_instance(compute, project, zone, instance['name'])
-    VMM.wait_for_operation(compute, project, zone, operation['name'])
+# compute = googleapiclient.discovery.build('compute', 'v1')
+# project = 'cloud-infrastucture-251118'
+# zone = 'us-central1-f'
+# bucket = 'ci_11142019'
+# instances = VMM.list_instances(compute, project, zone)
+# for instance in instances:
+#     operation = VMM.delete_instance(compute, project, zone, instance['name'])
+#     VMM.wait_for_operation(compute, project, zone, operation['name'])
 #=============================================================================================================
