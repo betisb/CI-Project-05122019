@@ -39,21 +39,21 @@ import GC_SSH_Manager as SSHM
 
 #Part Four List All VMS and Get Network Interface Information
 #=============================================================================================================
-compute = googleapiclient.discovery.build('compute', 'v1')
-project = 'cloud-infrastucture-251118'
-zone = 'us-central1-f'
-bucket = 'ci_11142019'
-instances = VMM.list_instances(compute, project, zone)
-print('Instances in project %s and zone %s:' % (project, zone))
-for instance in instances:
-    print(' - ' + instance['name'])
-    hostname = compute.instances().get(
-        project=project,
-        zone=zone,
-        instance=instance['name'],
-        fields='networkInterfaces/accessConfigs/natIP'
-    ).execute()['networkInterfaces'][0]['accessConfigs'][0]['natIP']
-    print(hostname)
+# compute = googleapiclient.discovery.build('compute', 'v1')
+# project = 'cloud-infrastucture-251118'
+# zone = 'us-central1-f'
+# bucket = 'ci_11142019'
+# instances = VMM.list_instances(compute, project, zone)
+# print('Instances in project %s and zone %s:' % (project, zone))
+# for instance in instances:
+#     print(' - ' + instance['name'])
+#     hostname = compute.instances().get(
+#         project=project,
+#         zone=zone,
+#         instance=instance['name'],
+#         fields='networkInterfaces/accessConfigs/natIP'
+#     ).execute()['networkInterfaces'][0]['accessConfigs'][0]['natIP']
+#     print(hostname)
 
 #=============================================================================================================
 
