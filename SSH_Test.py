@@ -36,9 +36,9 @@ def test_main(capsys):
 
     # Initialize variables.
     cmd = 'uname -a'
-    project = os.environ['GCLOUD_PROJECT']
+    project = 'cloud-infrastucture-251118'
     test_id = 'oslogin-test-{id}'.format(id=str(random.randint(0, 1000000)))
-    zone = 'us-east1-d'
+    zone = 'us-east1-f'
     image_family = 'projects/debian-cloud/global/images/family/debian-9'
     machine_type = 'zones/{zone}/machineTypes/f1-micro'.format(zone=zone)
     account_email = '{test_id}@{project}.iam.gserviceaccount.com'.format(
