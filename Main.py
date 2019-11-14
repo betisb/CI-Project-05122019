@@ -11,23 +11,23 @@ import googleapiclient
 import GC_VM_Manager as VMM
 import GC_Bucket_Creator as BC
 import GC_SSH_Manager as SSHM
-
-#Part One Create Project
-#=============================================================================================================
-# PC.Project_Creator('ci12122019-2')
-#=============================================================================================================
-
-
-
-#Part Two Create Bucket
-#=============================================================================================================
-# BC.Bucket_Creator('cloud-infrastucture-251118','ci12122019-2')
-#=============================================================================================================
-
-
-
-#Part Three Create VM Instances
-#=============================================================================================================
+#
+# #Part One Create Project
+# #=============================================================================================================
+# PC.Project_Creator('random-ci12122019')
+# #=============================================================================================================
+#
+#
+#
+# #Part Two Create Bucket
+# #=============================================================================================================
+# BC.Bucket_Creator('cloud-infrastucture-251118','random-ci12122019')
+# #=============================================================================================================
+#
+#
+#
+# #Part Three Create VM Instances
+# #=============================================================================================================
 # compute = googleapiclient.discovery.build('compute', 'v1')
 # project = 'cloud-infrastucture-251118'
 # zone = 'us-central1-f'
@@ -35,8 +35,8 @@ import GC_SSH_Manager as SSHM
 # bucket = 'ci_11142019'
 # operation = VMM.create_instance(compute, project, zone, instance_name, bucket)
 # VMM.wait_for_operation(compute, project, zone, operation['name'])
-#=============================================================================================================
-
+# #=============================================================================================================
+#
 # Create the OS Login API object.
 import SSH_Test
 
@@ -70,10 +70,10 @@ for instance in instances:
     ).execute()['networkInterfaces'][0]['accessConfigs'][0]['natIP']
     print(hostname)
 
-#=============================================================================================================
-
-#Part SSH
-#=============================================================================================================
+# #=============================================================================================================
+#
+# #Part SSH
+# #=============================================================================================================
 cmd = 'uname -a'
 project = 'cloud-infrastucture-251118'
 test_id = 'oslogin-test-{id}'.format(id=str(random.randint(0, 1000000)))
@@ -96,13 +96,18 @@ compute = googleapiclient.discovery.build(
 oslogin = googleapiclient.discovery.build(
     'oslogin', 'v1')
 account = 'users/' + account_email
-SSHM.main(cmd='uname -a',project='cloud-infrastucture-251118',instance='vm1',zone='us-central1-f',oslogin=oslogin,account=account,hostname='35.226.6.96')
-# SSHM.execute(cmd='uname -a')
-
-#=============================================================================================================
-
-#Part Five Delete All VMs After Docker Job is Done
-#=============================================================================================================
+# import os
+cmd = 'gcloud compute ssh vm1 --project "cloud-infrastucture-251118" --zone us-central1-f'
+os.system(cmd)
+#     # cmd = ' gcloud components update'
+#     # os.system(cmd)
+# # SSHM.main(cmd='uname -a',project='cloud-infrastucture-251118',instance='vm1',zone='us-central1-f',oslogin=oslogin,account=account,hostname='34.68.183.81')
+# # SSHM.execute(cmd='uname -a')
+#
+# #=============================================================================================================
+#
+# #Part Five Delete All VMs After Docker Job is Done
+# #=============================================================================================================
 # compute = googleapiclient.discovery.build('compute', 'v1')
 # project = 'cloud-infrastucture-251118'
 # zone = 'us-central1-f'
@@ -111,4 +116,4 @@ SSHM.main(cmd='uname -a',project='cloud-infrastucture-251118',instance='vm1',zon
 # for instance in instances:
 #     operation = VMM.delete_instance(compute, project, zone, instance['name'])
 #     VMM.wait_for_operation(compute, project, zone, operation['name'])
-#=============================================================================================================
+# #=============================================================================================================
